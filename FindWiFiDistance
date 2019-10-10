@@ -1,0 +1,34 @@
+## Script to find distance between an observation point and observed BSSID's.
+## Define coodinates of reference point, define list of BSSID's to search, add Wigle Wi-Fi API key for Pygle
+
+cleanedListBSSID = ['3c:04:61:8d:7d:90']
+distanceList = []
+observationPoint = [34.1660801, -118.1836636]
+
+def plotMap(lat,lng, bssid):
+    folium.CircleMarker(location=(lat, lng), radius=5, color='red', popup=bssid).add_to(mymap)
+
+def findDistance(lat, lng, observationPoint):
+   ## observationPoint = (34.1660801, -118.1836636)
+    wifipoint = (lat, lng)
+    print(distance.distance(observationPoint, wifipoint).miles)
+    distanceList.append(distance.distance(observationPoint, wifipoint).miles)
+
+def geolocate_wigle(bssid):
+    res = network.search(netid=bssid)
+    print(res)
+    if res['success'] and res['resultCount']:
+        lat = res['results'][0]['trilat']
+        lng = res['results'][0]['trilong']
+        plotMap(lat,lng, bssid)
+        findDistance(lat, lng, observationPoint)
+    else:
+        print(res)
+        lat, lng = None, None
+    return lat, lng
+
+mymap = folium.Map(location=[34.0522, -118.243683], zoom_start=12)
+for i in range (0,len(cleanedListBSSID)):
+    geolocate_wigle(cleanedListBSSID[i])
+mymap.save('farthest.html')  # saves to html file for display below
+print("The maximum distance recorded was {} miles".format(max(distanceList)))

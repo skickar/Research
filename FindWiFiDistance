@@ -10,7 +10,6 @@ def plotMap(lat,lng, bssid, distanceTag): ## Plots the points on a map
     folium.CircleMarker(location=(lat, lng), radius=5, color='red', popup="{} at {}".format(bssid,distanceTag)).add_to(mymap)
 
 def findDistance(lat, lng, observationPoint):
-   ## observationPoint = (34.1660801, -118.1836636)
     wifipoint = (lat, lng)
     distanceResult = distance.distance(observationPoint, wifipoint).miles
     print(distanceResult)

